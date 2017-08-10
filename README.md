@@ -32,8 +32,8 @@ end
 
 class Geom < ActiveRecord::Base; end
 
-Geom.create!(geometry: [1, 1.0, 1.0])
-#=> #<Geom id: 15 geometry: [1, 1.0, 1.0]>
+Geom.create!(location: [1, 1.0, 1.0])
+#=> #<Geom id: 1 location: [1, 1.0, 1.0]>
 
 # 1: Point
 # 2: LineString
@@ -45,5 +45,5 @@ Geom.create!(geometry: [1, 1.0, 1.0])
 # see https://dev.mysql.com/doc/refman/5.6/en/gis-data-formats.html
 
 Geom.first
-#=> #<Geom id: 1, geometry: [1, 1.0, 1.0]>
+#=> #<Geom id: 1, location: [1, 1.0, 1.0]>
 ```
