@@ -38,6 +38,7 @@ Geom.create!(location: [1, 1.0, 1.0])
 # [1,   # WKB type
 #  1.0, # X coordinate
 #  1.0] # Y coordinate
+#
 # WKB type:
 #   1: Point
 #   2: LineString
@@ -45,7 +46,8 @@ Geom.create!(location: [1, 1.0, 1.0])
 #   4: MultiPoint
 #   5: MultiLineString
 #   6: MultiPolygon
-#   7:GeometryCollection.
+#   7: GeometryCollection
+#
 # see https://dev.mysql.com/doc/refman/5.6/en/gis-data-formats.html
 
 Geom.first
