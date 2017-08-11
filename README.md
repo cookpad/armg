@@ -2,6 +2,8 @@
 
 Add MySQL geometry type to Active Record.
 
+[![Build Status](https://travis-ci.org/winebarrel/armg.svg?branch=master)](https://travis-ci.org/winebarrel/armg)
+
 ## Installation
 
 Add this line to your application's Gemfile:
