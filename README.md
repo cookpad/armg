@@ -2,6 +2,7 @@
 
 Add MySQL geometry type to Active Record.
 
+[![Gem Version](https://badge.fury.io/rb/armg.svg)](https://badge.fury.io/rb/armg)
 [![Build Status](https://travis-ci.org/winebarrel/armg.svg?branch=master)](https://travis-ci.org/winebarrel/armg)
 
 ## Installation
