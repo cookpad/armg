@@ -7,9 +7,9 @@ class Armg::MysqlGeometry < ActiveModel::Type::Value
 
   def deserialize(value)
     if value.is_a?(::String)
-      # https://dev.mysql.com/doc/refman/5.6/en/gis-data-formats.html
-      value.slice!(0, 5)
-      value.unpack("L<E2")
+      srid = value[0..3].unpack('L<').first
+      wkb_parser = RGeo::WKRep::WKBParser.new(nil, support_ewkb: true, default_srid: srid)
+      wkb_parser.parse(value[4..-1])
     else
       value
     end
@@ -19,7 +19,9 @@ class Armg::MysqlGeometry < ActiveModel::Type::Value
     if value.nil?
       nil
     else
-      "\x00\x00\x00\x00\x01" + value.pack("L<E2")
+      wkb_generator = RGeo::WKRep::WKBGenerator.new(type_format: :ewkb, little_endian: true)
+      wkb = wkb_generator.generate(value)
+      [value.srid].pack('L<') + wkb
     end
   end
 end

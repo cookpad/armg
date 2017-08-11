@@ -1,4 +1,5 @@
 require 'active_support/lazy_load_hooks'
+require 'rgeo'
 require 'armg/version'
 
 ActiveSupport.on_load(:active_record) do
@@ -11,5 +12,6 @@ ActiveSupport.on_load(:active_record) do
   ActiveRecord::ConnectionAdapters::AbstractMysqlAdapter.prepend(Armg::AbstractMysqlAdapterExt)
   ActiveRecord::Type.register(:geometry, Armg::MysqlGeometry, adapter: :mysql2)
   ActiveRecord::ConnectionAdapters::MySQL::TableDefinition.prepend(Armg::TableDefinitionExt)
+  ActiveRecord::ConnectionAdapters::MySQL::Table.prepend(Armg::TableDefinitionExt)
 end
 
