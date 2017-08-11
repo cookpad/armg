@@ -22,7 +22,7 @@ class MysqlHelper
   end
 
   def create_table
-    ActiveRecord::Migration.create_table :geoms, options: 'ENGINE=MyISAM' do |t|
+    ActiveRecord::Migration.create_table :geoms, options: 'ENGINE=MyISAM DEFAULT CHARSET=latin1' do |t|
       t.geometry 'location', null: false
       t.index ['location'], name: 'idx_location', type: :spatial
     end

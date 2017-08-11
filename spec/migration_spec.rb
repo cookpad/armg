@@ -1,7 +1,7 @@
 RSpec.describe Armg, skip_create_table: true do
   context 'create table' do
     specify do
-      ActiveRecord::Migration.create_table :geoms, options: 'ENGINE=MyISAM' do |t|
+      ActiveRecord::Migration.create_table :geoms, options: 'ENGINE=MyISAM DEFAULT CHARSET=latin1' do |t|
         t.geometry 'location', null: false
         t.index ['location'], name: 'idx_location', type: :spatial
       end
@@ -17,7 +17,7 @@ RSpec.describe Armg, skip_create_table: true do
 
   context 'alter table' do
     before do
-      ActiveRecord::Migration.create_table :geoms, options: 'ENGINE=MyISAM'
+      ActiveRecord::Migration.create_table :geoms, options: 'ENGINE=MyISAM DEFAULT CHARSET=latin1'
     end
 
     specify do
