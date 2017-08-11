@@ -49,7 +49,7 @@ Geom.first
 Armg.wkb_parser_factory = proc do |wkb|
   factory = RGeo::Geographic.spherical_factory(srid: 0)
   [ RGeo::WKRep::WKBParser.new(factory, support_ewkb: true),
-    wkb[4..-1],
+    wkb[4..-1], # wkb without srid
   ]
 end
 
@@ -70,9 +70,9 @@ class CustomGenerator
   end
 end
 
-Armg.wkb_generator_factory = proc do |_|
+Armg.wkb_generator_factory = proc do |deserialized_value|
   [ CustomGenerator.new,
-    "\x00\x00\x00\x00",
+    "\x00\x00\x00\x00", # srid
   ]
 end
 
