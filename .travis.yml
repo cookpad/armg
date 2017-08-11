@@ -1,5 +1,16 @@
 sudo: false
+dist: precise
 language: ruby
 rvm:
-  - 2.3.3
-before_install: gem install bundler -v 1.14.3
+  - 2.3.4
+before_install: gem install bundler
+cache:
+  - bundler
+  - apt
+services:
+  - mysql
+env:
+  global:
+    - ARMG_TEST_MYSQL_PORT=3306
+script:
+  - bundle exec rake
