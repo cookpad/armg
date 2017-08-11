@@ -48,9 +48,11 @@ RSpec.describe Armg do
 
   context 'passing wkb parser factory' do
     specify do
-      Armg.wkb_parser_factory = proc do |_|
+      Armg.wkb_parser_factory = proc do |wkb|
         factory = RGeo::Geographic.spherical_factory(srid: 0)
-        RGeo::WKRep::WKBParser.new(factory, support_ewkb: true)
+        [ RGeo::WKRep::WKBParser.new(factory, support_ewkb: true),
+          wkb[4..-1],
+        ]
       end
 
       { 1 => ['POINT (1.0 1.0)', 0, RGeo::Geographic::SphericalPointImpl],

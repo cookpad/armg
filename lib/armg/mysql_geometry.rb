@@ -3,7 +3,9 @@ class Armg::MysqlGeometry < ActiveModel::Type::Value
 
   DEFAULT_WKB_PARSER_FACTORY = proc do |wkb|
     srid = wkb[0..3].unpack('L<').first
-    RGeo::WKRep::WKBParser.new(nil, support_ewkb: true, default_srid: srid)
+    [ RGeo::WKRep::WKBParser.new(nil, support_ewkb: true, default_srid: srid),
+      wkb[4..-1],
+    ]
   end
 
   DEFAULT_WKB_GENERATOR_FACTORY = proc do |value|
@@ -18,8 +20,8 @@ class Armg::MysqlGeometry < ActiveModel::Type::Value
 
   def deserialize(value)
     if value.is_a?(::String)
-      wkb_parser = Armg.wkb_parser_factory.call(value)
-      wkb_parser.parse(value[4..-1])
+      wkb_parser, value = Armg.wkb_parser_factory.call(value)
+      wkb_parser.parse(value)
     else
       value
     end
