@@ -45,4 +45,48 @@ RSpec.describe Armg do
       end
     end
   end
+
+  context 'passing wkb parser factory' do
+    specify do
+      Armg.wkb_parser_factory = proc do |_|
+        factory = RGeo::Geographic.spherical_factory(srid: 0)
+        RGeo::WKRep::WKBParser.new(factory, support_ewkb: true)
+      end
+
+      { 1 => ['POINT (1.0 1.0)', 0, RGeo::Geographic::SphericalPointImpl],
+        2 => ['LINESTRING (0.0 0.0, 1.0 1.0, 2.0 2.0)', 0, RGeo::Geographic::SphericalLineStringImpl],
+        3 => ['POLYGON ((0.0 0.0, 10.0 0.0, 10.0 10.0, 0.0 10.0, 0.0 0.0), (5.0 5.0, 7.0 5.0, 7.0 7.0, 5.0 7.0, 5.0 5.0))', 0, RGeo::Geographic::SphericalPolygonImpl],
+      }.each do |record_id, (wkt, srid, klass)|
+        geom = Geom.find(record_id)
+        expect(geom.location).to be_a klass
+        expect(geom.location.srid).to eq srid
+        expect(geom.location.to_s).to eq wkt
+      end
+    end
+  end
+
+  context 'passing wkb generate factory' do
+    class CustomGenerator
+      def generate(value)
+        if value.is_a?(String)
+          value = RGeo::WKRep::WKTParser.new(nil, support_ewkt: true).parse(value)
+        end
+
+        RGeo::WKRep::WKBGenerator.new(type_format: :ewkb, little_endian: true).generate(value)
+      end
+    end
+
+    specify do
+      Armg.wkb_generator_factory = proc do |_|
+        [ CustomGenerator.new,
+          "\x00\x00\x00\x00",
+        ]
+      end
+
+      Geom.create!(id: 4, location: 'Point(-122.1 47.3)')
+      geom = Geom.find(4)
+      expect(geom.location.srid).to eq 0
+      expect(geom.location.to_s).to eq 'POINT (-122.1 47.3)'
+    end
+  end
 end

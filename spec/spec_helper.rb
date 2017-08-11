@@ -24,5 +24,8 @@ RSpec.configure do |config|
     unless example.metadata[:skip_create_table]
       @mysql_helper.create_table
     end
+
+    Armg.wkb_parser_factory = Armg::MysqlGeometry::DEFAULT_WKB_PARSER_FACTORY
+    Armg.wkb_generator_factory = Armg::MysqlGeometry::DEFAULT_WKB_GENERATOR_FACTORY
   end
 end
