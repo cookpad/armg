@@ -26,7 +26,7 @@ Or install it yourself as:
 require 'active_record'
 require 'armg'
 
-ActiveRecord::Base.establish_connection(adapter: 'mysql2', database: 'my_db');
+ActiveRecord::Base.establish_connection(adapter: 'mysql2', database: 'my_db')
 
 ActiveRecord::Migration.create_table :geoms, options: 'ENGINE=MyISAM' do |t|
   t.geometry 'location', null: false
