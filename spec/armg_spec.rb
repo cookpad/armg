@@ -54,7 +54,7 @@ RSpec.describe Armg do
       end
 
       def parse(wkb)
-        wkb_without_srid = wkb.bytes[4..-1].pack('c*')
+        wkb_without_srid = wkb.b.slice(4..-1)
         @parser.parse(wkb_without_srid)
       end
     end

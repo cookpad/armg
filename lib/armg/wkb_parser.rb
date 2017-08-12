@@ -9,10 +9,10 @@ class Armg::WkbParser
   end
 
   def parse(wkb)
-    wkb = wkb.bytes
+    wkb = wkb.b
     srid = wkb.slice!(0..3)
-    wkb[4] = 0x20
+    wkb[4] = "\x20"
     wkb.insert(5, *srid)
-    @parser.parse(wkb.pack('c*'))
+    @parser.parse(wkb)
   end
 end
