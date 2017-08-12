@@ -12,7 +12,7 @@ class Armg::WkbParser
     wkb = wkb.b
     srid = wkb.slice!(0..3)
     wkb[4] = "\x20"
-    wkb.insert(5, *srid)
+    wkb.insert(5, srid)
     @parser.parse(wkb)
   end
 end
