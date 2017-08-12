@@ -1,6 +1,4 @@
 class Armg::MysqlGeometry < ActiveModel::Type::Value
-  include ActiveModel::Type::Helpers::Mutable
-
   DEFAULT_WKB_PARSER = Armg::WkbParser.new
   DEFAULT_WKB_GENERATOR = Armg::WkbGenerator.new
 
