@@ -4,7 +4,7 @@ class Armg::WkbGenerator
     little_endian: true,
   }
 
-  def initialize(factory = nil, options = {})
+  def initialize(options = {})
     options = DEFAULT_OPTIONS.merge(options)
     @generator = RGeo::WKRep::WKBGenerator.new(options)
   end
