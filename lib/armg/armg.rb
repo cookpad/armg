@@ -1,22 +1,22 @@
 module Armg
-  @wkb_parser_factory = Armg::MysqlGeometry::DEFAULT_WKB_PARSER_FACTORY
-  @wkb_generator_factory = Armg::MysqlGeometry::DEFAULT_WKB_GENERATOR_FACTORY
+  @wkb_parser = Armg::MysqlGeometry::DEFAULT_WKB_PARSER
+  @wkb_generator = Armg::MysqlGeometry::DEFAULT_WKB_GENERATOR
 
   class << self
-    def wkb_parser_factory
-      @wkb_parser_factory
+    def wkb_parser
+      @wkb_parser
     end
 
-    def wkb_parser_factory=(factory)
-      @wkb_parser_factory = factory
+    def wkb_parser=(parser)
+      @wkb_parser = parser
     end
 
-    def wkb_generator_factory
-      @wkb_generator_factory
+    def wkb_generator
+      @wkb_generator
     end
 
-    def wkb_generator_factory=(factory)
-      @wkb_generator_factory = factory
+    def wkb_generator=(generator)
+      @wkb_generator = generator
     end
   end
 end

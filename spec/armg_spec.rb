@@ -47,13 +47,20 @@ RSpec.describe Armg do
   end
 
   context 'passing wkb parser factory' do
-    specify do
-      Armg.wkb_parser_factory = proc do |wkb|
+    class CustomParser
+      def initialize
         factory = RGeo::Geographic.spherical_factory(srid: 0)
-        [ RGeo::WKRep::WKBParser.new(factory, support_ewkb: true),
-          wkb[4..-1],
-        ]
+        @parser = RGeo::WKRep::WKBParser.new(factory, support_ewkb: true)
       end
+
+      def parse(wkb)
+        wkb_without_srid = wkb.bytes[4..-1].pack('c*')
+        @parser.parse(wkb_without_srid)
+      end
+    end
+
+    specify do
+      Armg.wkb_parser = CustomParser.new
 
       { 1 => ['POINT (1.0 1.0)', 0, RGeo::Geographic::SphericalPointImpl],
         2 => ['LINESTRING (0.0 0.0, 1.0 1.0, 2.0 2.0)', 0, RGeo::Geographic::SphericalLineStringImpl],
@@ -69,22 +76,23 @@ RSpec.describe Armg do
 
   context 'passing wkb generate factory' do
     class CustomGenerator
+      def initialize
+        @wkt_parser = RGeo::WKRep::WKTParser.new(nil, support_ewkt: true)
+        @generator = RGeo::WKRep::WKBGenerator.new(type_format: :ewkb, little_endian: true)
+      end
+
       def generate(value)
         if value.is_a?(String)
-          value = RGeo::WKRep::WKTParser.new(nil, support_ewkt: true).parse(value)
+          value = @wkt_parser.parse(value)
         end
 
-        RGeo::WKRep::WKBGenerator.new(type_format: :ewkb, little_endian: true).generate(value)
+        srid = "\x00\x00\x00\x00"
+        srid + @generator.generate(value)
       end
     end
 
     specify do
-      Armg.wkb_generator_factory = proc do |_|
-        [ CustomGenerator.new,
-          "\x00\x00\x00\x00",
-        ]
-      end
-
+      Armg.wkb_generator = CustomGenerator.new
       Geom.create!(id: 4, location: 'Point(-122.1 47.3)')
       geom = Geom.find(4)
       expect(geom.location.srid).to eq 0

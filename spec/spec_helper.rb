@@ -25,7 +25,7 @@ RSpec.configure do |config|
       @mysql_helper.create_table
     end
 
-    Armg.wkb_parser_factory = Armg::MysqlGeometry::DEFAULT_WKB_PARSER_FACTORY
-    Armg.wkb_generator_factory = Armg::MysqlGeometry::DEFAULT_WKB_GENERATOR_FACTORY
+    Armg.wkb_parser = Armg::MysqlGeometry::DEFAULT_WKB_PARSER
+    Armg.wkb_generator = Armg::MysqlGeometry::DEFAULT_WKB_GENERATOR
   end
 end
