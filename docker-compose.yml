@@ -1,8 +1,14 @@
 version: '2'
 services:
-  mysql:
+  mysql56:
     ports:
-      - "6033:3306"
+      - "10056:3306"
     image: "mysql:5.6"
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=1
+  mysql57:
+    ports:
+      - "10057:3306"
+    image: "mysql:5.7"
     environment:
       - MYSQL_ALLOW_EMPTY_PASSWORD=1

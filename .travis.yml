@@ -1,16 +1,25 @@
-sudo: false
-dist: precise
+dist: trusty
+sudo: required
+group: edge
+services:
+  - docker
 language: ruby
 rvm:
+  - 2.2.7
   - 2.3.4
-before_install: gem install bundler
+  - 2.4.1
+before_install:
+  - gem install bundler
+before_script:
+  - sudo service mysql stop
+  - docker-compose up -d
+  - function mysql_ping { mysqladmin -u root -h 127.0.0.1 -P $1 ping; }
+  - for i in {1..60}; do mysql_ping 10056 && break; sleep 1; done
+  - for i in {1..60}; do mysql_ping 10057 && break; sleep 1; done
 cache:
   - bundler
   - apt
-services:
-  - mysql
 env:
-  global:
-    - ARMG_TEST_MYSQL_PORT=3306
+  - ARMG_TEST_MYSQL_PORT=10056 ARMG_TEST_MYSQL_ENGINE=MyISAM
 script:
   - bundle exec rake

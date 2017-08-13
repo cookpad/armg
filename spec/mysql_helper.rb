@@ -1,8 +1,10 @@
 class MysqlHelper
-  MYSQL_HOST = ENV['ARMG_TEST_MYSQL_HOST'] || '127.0.0.1'
-  MYSQL_PORT = ENV['ARMG_TEST_MYSQL_PORT'] || 6033
-  MYSQL_USER = ENV['ARMG_TEST_MYSQL_USER'] || 'root'
-  MYSQL_DB = ENV['ARMG_TEST_MYSQL_DB'] || 'armg_test'
+  MYSQL_HOST    = ENV['ARMG_TEST_MYSQL_HOST'] || '127.0.0.1'
+  MYSQL_PORT    = ENV['ARMG_TEST_MYSQL_PORT'] || 10056
+  MYSQL_USER    = ENV['ARMG_TEST_MYSQL_USER'] || 'root'
+  MYSQL_DB      = ENV['ARMG_TEST_MYSQL_DB'] || 'armg_test'
+  MYSQL_ENGINE  = ENV['ARMG_TEST_MYSQL_ENGINE'] || 'MyISAM'
+  TABLE_OPTIONS = "ENGINE=#{MYSQL_ENGINE} DEFAULT CHARSET=utf8"
 
   def initialize
     @mysql = Mysql2::Client.new(
@@ -22,7 +24,7 @@ class MysqlHelper
   end
 
   def create_table
-    ActiveRecord::Migration.create_table :geoms, options: 'ENGINE=MyISAM DEFAULT CHARSET=latin1' do |t|
+    ActiveRecord::Migration.create_table :geoms, options: TABLE_OPTIONS do |t|
       t.geometry 'location', null: false
       t.index ['location'], name: 'idx_location', type: :spatial
     end
