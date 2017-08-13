@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.describe Armg do
   let(:wkt_parser) { RGeo::WKRep::WKTParser.new(nil, support_ewkt: true) }
 

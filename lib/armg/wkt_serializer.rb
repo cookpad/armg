@@ -1,16 +1,23 @@
-class Armg::WktSerializer < Armg::WkbSerializer
-  DEFAULT_OPTIONS = {
+class Armg::WktSerializer
+  DEFAULT_WKB_GENERATOR_OPTIONS = {
+    type_format: :ewkb,
+    little_endian: true,
+  }
+
+  DEFAULT_WKT_PARSER_OPTIONS = {
     support_ewkt: true
   }
 
-  def initialize(factory = nil, options = {})
-    super(options)
-    options = DEFAULT_OPTIONS.merge(options)
-    @wkt_parser = RGeo::WKRep::WKTParser.new(factory, options)
+  def initialize(factory: nil, wkb_generator_options: {}, wkt_parser_options: {})
+    @wkb_generator = RGeo::WKRep::WKBGenerator.new(
+      DEFAULT_WKB_GENERATOR_OPTIONS.merge(wkb_generator_options))
+    @wkt_parser = RGeo::WKRep::WKTParser.new(factory,
+      DEFAULT_WKT_PARSER_OPTIONS.merge(wkt_parser_options))
   end
 
   def serialize(wkt)
     obj = @wkt_parser.parse(wkt)
-    super(obj)
+    srid = Armg::Utils.pack_srid(obj.srid)
+    srid + @wkb_generator.generate(obj)
   end
 end
