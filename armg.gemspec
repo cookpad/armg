@@ -28,4 +28,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec', '~> 3.0'
   spec.add_development_dependency 'mysql2'
   spec.add_development_dependency 'rspec-match_fuzzy'
+  spec.add_development_dependency 'appraisal', '>= 2.2.0'
 end

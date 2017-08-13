@@ -88,3 +88,15 @@ Armg.wkb_generator = CustomGenerator.new
 
 Geom.create!(id: 4, location: 'Point(-122.1 47.3)')
 ```
+
+## Running tests
+
+```sh
+docker-compose up -d
+bundle install
+bundle exec appraisal install
+bundle exec appraisal ar51 rake
+# ARMG_TEST_MYSQL_PORT=10057 bundle exec appraisal ar51 rake # MySQL 5.7
+# ARMG_TEST_MYSQL_PORT=10057 bundle exec appraisal ar51 rake
+# ARMG_TEST_MYSQL_PORT=10057 ARMG_TEST_MYSQL_ENGINE=InnoDB bundle exec appraisal ar51 rake
+```

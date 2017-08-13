@@ -8,6 +8,9 @@ rvm:
   - 2.2.7
   - 2.3.4
   - 2.4.1
+gemfile:
+  - gemfiles/ar50.gemfile
+  - gemfiles/ar51.gemfile
 before_install:
   - gem install bundler
 before_script:
