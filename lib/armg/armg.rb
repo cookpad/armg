@@ -1,7 +1,9 @@
 module Armg
+  @deserializer = Armg::WkbDeserializer.new
+  @serializer = Armg::WkbSerializer.new
+
   class << self
     def deserializer
-      @deserializer ||= Armg::WkbDeserializer.new
       @deserializer
     end
 
@@ -10,7 +12,6 @@ module Armg
     end
 
     def serializer
-      @serializer ||= Armg::WkbSerializer.new
       @serializer
     end
 
