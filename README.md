@@ -112,3 +112,8 @@ bundle exec appraisal ar51 rake
 # ARMG_TEST_MYSQL_PORT=10057 bundle exec appraisal ar51 rake # MySQL 5.7
 # ARMG_TEST_MYSQL_PORT=10057 ARMG_TEST_MYSQL_ENGINE=InnoDB bundle exec appraisal ar51 rake
 ```
+
+## Related links
+
+* [rgeo/rgeo: Geospatial data library for Ruby](https://github.com/rgeo/rgeo)
+* [MySQL :: MySQL 5.7 Reference Manual :: 11.5.3 Supported Spatial Data Formats](https://dev.mysql.com/doc/refman/5.7/en/gis-data-formats.html)
