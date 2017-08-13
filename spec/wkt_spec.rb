@@ -14,7 +14,7 @@ RSpec.describe Armg do
     end
   end
 
-  context 'update' do
+  context 'update wkt' do
     specify do
       geom = Geom.find(3)
       geom.location = 'Point(-122.1 147.3)'
@@ -24,7 +24,7 @@ RSpec.describe Armg do
     end
   end
 
-  context 'select' do
+  context 'select wkt' do
     specify do
       { 1 => 'Point (1.0 1.0)',
         2 => 'LineString (0.0 0.0, 1.0 1.0, 2.0 2.0)',
