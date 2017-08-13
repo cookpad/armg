@@ -3,13 +3,17 @@ RSpec.describe Armg, skip_create_table: true do
     specify do
       ActiveRecord::Migration.create_table :geoms, options: MysqlHelper::TABLE_OPTIONS do |t|
         t.geometry 'location', null: false
+        t.string 'name'
         t.index ['location'], name: 'idx_location', type: :spatial
+        t.index ['name'], name: 'idx_name', length: 10
       end
 
       expect(@mysql_helper.dump).to match_fuzzy <<-RUBY
         create_table "geoms", force: :cascade, options: #{MysqlHelper::TABLE_OPTIONS.inspect} do |t|
           t.geometry "location", null: false
+          t.string "name"
           t.index ["location"], name: "idx_location", type: :spatial
+          t.index ["name"], name: "idx_name", length: { name: 10 }
         end
       RUBY
     end

@@ -5,10 +5,14 @@ module Armg::AbstractMysqlAdapterExt
   end
 
   def indexes(*args, &block)
-    super.tap do |is|
-      is.each do |i|
-        i.lengths = nil if i.type = :spatial
+    is = super
+
+    is.each do |i|
+      if i.type == :spatial
+        i.lengths = nil
       end
     end
+
+    is
   end
 end
