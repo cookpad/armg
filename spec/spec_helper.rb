@@ -25,7 +25,7 @@ RSpec.configure do |config|
       @mysql_helper.create_table
     end
 
-    Armg.deserializer = Armg::MysqlGeometry::DEFAULT_DESERIALIZER
-    Armg.serializer = Armg::MysqlGeometry::DEFAULT_SERIALIZER
+    Armg.deserializer = Armg::WkbDeserializer.new
+    Armg.serializer = Armg::WkbSerializer.new
   end
 end

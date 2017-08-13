@@ -1,7 +1,4 @@
 class Armg::MysqlGeometry < ActiveModel::Type::Value
-  DEFAULT_DESERIALIZER = Armg::WkbDeserializer.new
-  DEFAULT_SERIALIZER = Armg::WkbSerializer.new
-
   def type
     :geometry
   end

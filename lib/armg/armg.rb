@@ -1,6 +1,6 @@
 module Armg
-  @deserializer = Armg::MysqlGeometry::DEFAULT_DESERIALIZER
-  @serializer = Armg::MysqlGeometry::DEFAULT_SERIALIZER
+  @deserializer = Armg::WkbDeserializer.new
+  @serializer = Armg::WkbSerializer.new
 
   class << self
     def deserializer
