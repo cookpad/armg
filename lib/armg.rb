@@ -13,7 +13,7 @@ ActiveSupport.on_load(:active_record) do
   require 'armg/table_definition_ext'
   require 'armg/armg'
 
-  ActiveRecord::ConnectionAdapters::AbstractMysqlAdapter::NATIVE_DATABASE_TYPES[:geometry] = { name: "geometry" }
+  ActiveRecord::ConnectionAdapters::AbstractMysqlAdapter::NATIVE_DATABASE_TYPES[:geometry] = { name: 'geometry' }
   ActiveRecord::ConnectionAdapters::AbstractMysqlAdapter.prepend(Armg::AbstractMysqlAdapterExt)
   ActiveRecord::Type.register(:geometry, Armg::MysqlGeometry, adapter: :mysql2)
   ActiveRecord::ConnectionAdapters::MySQL::TableDefinition.prepend(Armg::TableDefinitionExt)

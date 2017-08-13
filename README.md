@@ -77,7 +77,7 @@ Geom.take
 #=> #<Geom id: 1, location: #<RGeo::Geographic::SphericalPointImpl:0x... "POINT (-122.1 47.3)">>
 ```
 
-## Using custom WKB serializer
+## Using custom serializer
 
 ```ruby
 class CustomSerializer
