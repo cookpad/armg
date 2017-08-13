@@ -1,6 +1,6 @@
 class Armg::MysqlGeometry < ActiveModel::Type::Value
-  DEFAULT_WKB_PARSER = Armg::WkbParser.new
-  DEFAULT_WKB_GENERATOR = Armg::WkbGenerator.new
+  DEFAULT_DESERIALIZER = Armg::WkbDeserializer.new
+  DEFAULT_SERIALIZER = Armg::WkbSerializer.new
 
   def type
     :geometry
@@ -8,7 +8,7 @@ class Armg::MysqlGeometry < ActiveModel::Type::Value
 
   def deserialize(value)
     if value.is_a?(::String)
-      Armg.wkb_parser.parse(value)
+      Armg.deserializer.deserialize(value)
     else
       value
     end
@@ -18,7 +18,7 @@ class Armg::MysqlGeometry < ActiveModel::Type::Value
     if value.nil?
       nil
     else
-      Armg.wkb_generator.generate(value)
+      Armg.serializer.serialize(value)
     end
   end
 end

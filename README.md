@@ -44,47 +44,59 @@ Geom.first
 #=> #<Geom id: 1, location: #<RGeo::Cartesian::PointImpl:0x... "POINT (-122.1 47.3)">>
 ```
 
-## Using custom WKB parser
+## Using WKT
 
 ```ruby
-class CustomParser
+Armg.deserializer = Armg::WktDeserializer.new
+Armg.serializer = Armg::WktSerializer.new
+
+Geom.create!(location: 'Point(-122.1 47.3)')
+
+Geom.first
+#=> #<Geom id: 1, location: "Point (-122.1 47.3)">
+```
+
+## Using custom deserializer
+
+```ruby
+class CustomDeserializer
   def initialize
     factory = RGeo::Geographic.spherical_factory(srid: 0)
-    @parser = RGeo::WKRep::WKBParser.new(factory, support_ewkb: true)
+    @wkb_parser = RGeo::WKRep::WKBParser.new(factory, support_ewkb: true)
   end
 
-  def parse(wkb)
+  def deserialize(wkb)
     wkb_without_srid = wkb.b.slice(4..-1)
-    @parser.parse(wkb_without_srid)
+    @wkb_parser.parse(wkb_without_srid)
   end
 end
 
-Armg.wkb_parser = CustomParser.new
+Armg.deserializer = CustomDeserializer.new
 
 Geom.take
 #=> #<Geom id: 1, location: #<RGeo::Geographic::SphericalPointImpl:0x... "POINT (-122.1 47.3)">>
 ```
 
-## Using custom WKB generator
+## Using custom WKB serializer
 
 ```ruby
-class CustomGenerator
+class CustomSerializer
   def initialize
     @wkt_parser = RGeo::WKRep::WKTParser.new(nil, support_ewkt: true)
-    @generator = RGeo::WKRep::WKBGenerator.new(type_format: :ewkb, little_endian: true)
+    @wkb_generator = RGeo::WKRep::WKBGenerator.new(type_format: :ewkb, little_endian: true)
   end
 
-  def generate(value)
+  def serialize(value)
     if value.is_a?(String)
       value = @wkt_parser.parse(value)
     end
 
     srid = "\x00\x00\x00\x00"
-    srid + @generator.generate(value)
+    srid + @wkb_generator.generate(value)
   end
 end
 
-Armg.wkb_generator = CustomGenerator.new
+Armg.serializer = CustomSerializer.new
 
 Geom.create!(id: 4, location: 'Point(-122.1 47.3)')
 ```

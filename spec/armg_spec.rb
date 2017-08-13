@@ -46,21 +46,21 @@ RSpec.describe Armg do
     end
   end
 
-  context 'passing wkb parser factory' do
-    class CustomParser
+  context 'passing custom deserializer' do
+    class CustomDeserializer
       def initialize
         factory = RGeo::Geographic.spherical_factory(srid: 0)
-        @parser = RGeo::WKRep::WKBParser.new(factory, support_ewkb: true)
+        @wkb_parser = RGeo::WKRep::WKBParser.new(factory, support_ewkb: true)
       end
 
-      def parse(wkb)
+      def deserialize(wkb)
         wkb_without_srid = wkb.b.slice(4..-1)
-        @parser.parse(wkb_without_srid)
+        @wkb_parser.parse(wkb_without_srid)
       end
     end
 
     specify do
-      Armg.wkb_parser = CustomParser.new
+      Armg.deserializer = CustomDeserializer.new
 
       { 1 => ['POINT (1.0 1.0)', 0, RGeo::Geographic::SphericalPointImpl],
         2 => ['LINESTRING (0.0 0.0, 1.0 1.0, 2.0 2.0)', 0, RGeo::Geographic::SphericalLineStringImpl],
@@ -74,25 +74,25 @@ RSpec.describe Armg do
     end
   end
 
-  context 'passing wkb generate factory' do
-    class CustomGenerator
+  context 'passing custom serializer' do
+    class CustomSerializer
       def initialize
         @wkt_parser = RGeo::WKRep::WKTParser.new(nil, support_ewkt: true)
-        @generator = RGeo::WKRep::WKBGenerator.new(type_format: :ewkb, little_endian: true)
+        @wkb_generator = RGeo::WKRep::WKBGenerator.new(type_format: :ewkb, little_endian: true)
       end
 
-      def generate(value)
+      def serialize(value)
         if value.is_a?(String)
           value = @wkt_parser.parse(value)
         end
 
         srid = "\x00\x00\x00\x00"
-        srid + @generator.generate(value)
+        srid + @wkb_generator.generate(value)
       end
     end
 
     specify do
-      Armg.wkb_generator = CustomGenerator.new
+      Armg.serializer = CustomSerializer.new
       Geom.create!(id: 4, location: 'Point(-122.1 47.3)')
       geom = Geom.find(4)
       expect(geom.location.srid).to eq 0

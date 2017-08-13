@@ -1,22 +1,22 @@
 module Armg
-  @wkb_parser = Armg::MysqlGeometry::DEFAULT_WKB_PARSER
-  @wkb_generator = Armg::MysqlGeometry::DEFAULT_WKB_GENERATOR
+  @deserializer = Armg::MysqlGeometry::DEFAULT_DESERIALIZER
+  @serializer = Armg::MysqlGeometry::DEFAULT_SERIALIZER
 
   class << self
-    def wkb_parser
-      @wkb_parser
+    def deserializer
+      @deserializer
     end
 
-    def wkb_parser=(parser)
-      @wkb_parser = parser
+    def deserializer=(v)
+      @deserializer = v
     end
 
-    def wkb_generator
-      @wkb_generator
+    def serializer
+      @serializer
     end
 
-    def wkb_generator=(generator)
-      @wkb_generator = generator
+    def serializer=(v)
+      @serializer = v
     end
   end
 end

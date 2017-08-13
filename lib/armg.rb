@@ -4,8 +4,10 @@ require 'armg/version'
 
 ActiveSupport.on_load(:active_record) do
   require 'active_record/connection_adapters/abstract_mysql_adapter'
-  require 'armg/wkb_generator'
-  require 'armg/wkb_parser'
+  require 'armg/wkb_serializer'
+  require 'armg/wkb_deserializer'
+  require 'armg/wkt_serializer'
+  require 'armg/wkt_deserializer'
   require 'armg/abstract_mysql_adapter_ext'
   require 'armg/mysql_geometry'
   require 'armg/table_definition_ext'
