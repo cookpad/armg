@@ -8,7 +8,10 @@ RSpec.describe Armg, skip_create_table: true do
         t.index ['name'], name: 'idx_name', length: 10
       end
 
-      expect(@mysql_helper.dump).to match_fuzzy <<-RUBY
+      schema = @mysql_helper.dump
+      schema.sub!(', using: :btree', '') # for Active Record 5.0
+
+      expect(schema).to match_fuzzy <<-RUBY
         create_table "geoms", force: :cascade, options: #{MysqlHelper::TABLE_OPTIONS.inspect} do |t|
           t.geometry "location", null: false
           t.string "name"
