@@ -35,9 +35,11 @@ RSpec.describe Armg do
 
   context 'select' do
     specify do
-      { 1 => ['POINT (1.0 1.0)', 1245],
+      {
+        1 => ['POINT (1.0 1.0)', 1245],
         2 => ['LINESTRING (0.0 0.0, 1.0 1.0, 2.0 2.0)', 0],
-        3 => ['POLYGON ((0.0 0.0, 10.0 0.0, 10.0 10.0, 0.0 10.0, 0.0 0.0), (5.0 5.0, 7.0 5.0, 7.0 7.0, 5.0 7.0, 5.0 5.0))', 5678] }.each do |record_id, (wkt, srid)|
+        3 => ['POLYGON ((0.0 0.0, 10.0 0.0, 10.0 10.0, 0.0 10.0, 0.0 0.0), (5.0 5.0, 7.0 5.0, 7.0 7.0, 5.0 7.0, 5.0 5.0))', 5678]
+      }.each do |record_id, (wkt, srid)|
         geom = Geom.find(record_id)
         expect(geom.location.srid).to eq srid
         expect(geom.location.to_s).to eq wkt
