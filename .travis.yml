@@ -12,8 +12,6 @@ gemfile:
   - gemfiles/ar50.gemfile
   - gemfiles/ar51.gemfile
   - gemfiles/ar52.gemfile
-before_install:
-  - gem install bundler
 before_script:
   - sudo service mysql stop
   - docker-compose up -d
