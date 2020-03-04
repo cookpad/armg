@@ -1,0 +1,18 @@
+AllCops:
+  Exclude:
+    - gemfiles/**/*
+    - test.rb
+  TargetRubyVersion: 2.4
+Bundler/OrderedGems:
+  Include:
+    - "Appraisals"
+Layout/LineLength:
+  Enabled: false
+Metrics/BlockLength:
+  Enabled: false
+Naming/MethodParameterName:
+  Enabled: false
+Style/AccessModifierDeclarations:
+  Enabled: false
+Style/Documentation:
+  Enabled: false

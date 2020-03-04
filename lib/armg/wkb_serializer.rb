@@ -1,16 +1,20 @@
-class Armg::WkbSerializer
-  DEFAULT_OPTIONS = {
-    type_format: :ewkb,
-    little_endian: true,
-  }
+# frozen_string_literal: true
 
-  def initialize(**options)
-    options = DEFAULT_OPTIONS.merge(options)
-    @wkb_generator = RGeo::WKRep::WKBGenerator.new(options)
-  end
+module Armg
+  class WkbSerializer
+    DEFAULT_OPTIONS = {
+      type_format: :ewkb,
+      little_endian: true
+    }.freeze
 
-  def serialize(obj)
-    srid = Armg::Utils.pack_srid(obj.srid)
-    srid + @wkb_generator.generate(obj)
+    def initialize(**options)
+      options = DEFAULT_OPTIONS.merge(options)
+      @wkb_generator = RGeo::WKRep::WKBGenerator.new(options)
+    end
+
+    def serialize(obj)
+      srid = Armg::Utils.pack_srid(obj.srid)
+      srid + @wkb_generator.generate(obj)
+    end
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 RSpec.describe Armg do
@@ -28,8 +30,7 @@ RSpec.describe Armg do
     specify do
       { 1 => 'Point (1.0 1.0)',
         2 => 'LineString (0.0 0.0, 1.0 1.0, 2.0 2.0)',
-        3 => 'Polygon ((0.0 0.0, 10.0 0.0, 10.0 10.0, 0.0 10.0, 0.0 0.0), (5.0 5.0, 7.0 5.0, 7.0 7.0, 5.0 7.0, 5.0 5.0))',
-      }.each do |record_id, wkt|
+        3 => 'Polygon ((0.0 0.0, 10.0 0.0, 10.0 10.0, 0.0 10.0, 0.0 0.0), (5.0 5.0, 7.0 5.0, 7.0 7.0, 5.0 7.0, 5.0 5.0))' }.each do |record_id, wkt|
         geom = Geom.find(record_id)
         expect(geom.location).to eq wkt
       end

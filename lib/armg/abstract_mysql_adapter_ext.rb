@@ -1,18 +1,20 @@
-module Armg::AbstractMysqlAdapterExt
-  def initialize_type_map(m = type_map)
-    super
-    m.register_type %r(^geometry)i, Armg::MysqlGeometry.new
-  end
+# frozen_string_literal: true
 
-  def indexes(*args, &block)
-    is = super
-
-    is.each do |i|
-      if i.type == :spatial && i.respond_to?(:lengths=)
-        i.lengths = nil
-      end
+module Armg
+  module AbstractMysqlAdapterExt
+    def initialize_type_map(m = type_map)
+      super
+      m.register_type(/^geometry/i, Armg::MysqlGeometry.new)
     end
 
-    is
+    def indexes(*args, &block)
+      is = super
+
+      is.each do |i|
+        i.lengths = nil if i.type == :spatial && i.respond_to?(:lengths=)
+      end
+
+      is
+    end
   end
 end

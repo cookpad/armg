@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe Armg do
   let(:wkt_parser) { RGeo::WKRep::WKTParser.new(nil, support_ewkt: true) }
 
@@ -26,7 +28,7 @@ RSpec.describe Armg do
       geom.location = point
       geom.save!
       geom = Geom.find(3)
-      expect(geom.location.srid).to eq 14326
+      expect(geom.location.srid).to eq 14_326
       expect(geom.location.to_s).to eq 'POINT (-122.1 147.3)'
     end
   end
@@ -35,8 +37,7 @@ RSpec.describe Armg do
     specify do
       { 1 => ['POINT (1.0 1.0)', 1245],
         2 => ['LINESTRING (0.0 0.0, 1.0 1.0, 2.0 2.0)', 0],
-        3 => ['POLYGON ((0.0 0.0, 10.0 0.0, 10.0 10.0, 0.0 10.0, 0.0 0.0), (5.0 5.0, 7.0 5.0, 7.0 7.0, 5.0 7.0, 5.0 5.0))', 5678],
-      }.each do |record_id, (wkt, srid)|
+        3 => ['POLYGON ((0.0 0.0, 10.0 0.0, 10.0 10.0, 0.0 10.0, 0.0 0.0), (5.0 5.0, 7.0 5.0, 7.0 7.0, 5.0 7.0, 5.0 5.0))', 5678] }.each do |record_id, (wkt, srid)|
         geom = Geom.find(record_id)
         expect(geom.location.srid).to eq srid
         expect(geom.location.to_s).to eq wkt
@@ -62,8 +63,7 @@ RSpec.describe Armg do
 
       { 1 => ['POINT (1.0 1.0)', 0, RGeo::Geographic::SphericalPointImpl],
         2 => ['LINESTRING (0.0 0.0, 1.0 1.0, 2.0 2.0)', 0, RGeo::Geographic::SphericalLineStringImpl],
-        3 => ['POLYGON ((0.0 0.0, 10.0 0.0, 10.0 10.0, 0.0 10.0, 0.0 0.0), (5.0 5.0, 7.0 5.0, 7.0 7.0, 5.0 7.0, 5.0 5.0))', 0, RGeo::Geographic::SphericalPolygonImpl],
-      }.each do |record_id, (wkt, srid, klass)|
+        3 => ['POLYGON ((0.0 0.0, 10.0 0.0, 10.0 10.0, 0.0 10.0, 0.0 0.0), (5.0 5.0, 7.0 5.0, 7.0 7.0, 5.0 7.0, 5.0 5.0))', 0, RGeo::Geographic::SphericalPolygonImpl] }.each do |record_id, (wkt, srid, klass)|
         geom = Geom.find(record_id)
         expect(geom.location).to be_a klass
         expect(geom.location.srid).to eq srid
@@ -80,9 +80,7 @@ RSpec.describe Armg do
       end
 
       def serialize(value)
-        if value.is_a?(String)
-          value = @wkt_parser.parse(value)
-        end
+        value = @wkt_parser.parse(value) if value.is_a?(String)
 
         srid = "\x00\x00\x00\x00"
         srid + @wkb_generator.generate(value)

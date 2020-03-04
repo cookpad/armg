@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class MysqlHelper
   MYSQL_HOST    = ENV['ARMG_TEST_MYSQL_HOST'] || '127.0.0.1'
-  MYSQL_PORT    = ENV['ARMG_TEST_MYSQL_PORT'] || 10056
+  MYSQL_PORT    = ENV['ARMG_TEST_MYSQL_PORT'] || 10_056
   MYSQL_USER    = ENV['ARMG_TEST_MYSQL_USER'] || 'root'
   MYSQL_DB      = ENV['ARMG_TEST_MYSQL_DB'] || 'armg_test'
   MYSQL_ENGINE  = ENV['ARMG_TEST_MYSQL_ENGINE'] || 'MyISAM'
@@ -8,7 +10,8 @@ class MysqlHelper
 
   def initialize
     @mysql = Mysql2::Client.new(
-      host: MYSQL_HOST, port: MYSQL_PORT, username: MYSQL_USER)
+      host: MYSQL_HOST, port: MYSQL_PORT, username: MYSQL_USER
+    )
   end
 
   def reset
@@ -20,7 +23,7 @@ class MysqlHelper
     buf = StringIO.new
     ActiveRecord::SchemaDumper.dump(ActiveRecord::Base.connection, buf)
     buf = buf.string.sub(/\A.*\bActiveRecord::Schema\.define\(version: \d+\) do/m, '').sub(/end\s*\z/, '')
-    buf.lines.map {|l| l.sub(/\A  /, '') }.join.strip
+    buf.lines.map { |l| l.sub(/\A  /, '') }.join.strip
   end
 
   def create_table
@@ -48,7 +51,8 @@ class MysqlHelper
       host: MYSQL_HOST,
       port: MYSQL_PORT,
       username: MYSQL_USER,
-      database: MYSQL_DB)
+      database: MYSQL_DB
+    )
   end
 end
 

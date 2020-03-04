@@ -1,21 +1,25 @@
-class Armg::MysqlGeometry < ActiveModel::Type::Value
-  def type
-    :geometry
-  end
+# frozen_string_literal: true
 
-  def deserialize(value)
-    if value.is_a?(::String)
-      Armg.deserializer.deserialize(value)
-    else
-      value
+module Armg
+  class MysqlGeometry < ActiveModel::Type::Value
+    def type
+      :geometry
     end
-  end
 
-  def serialize(value)
-    if value.nil?
-      nil
-    else
-      Armg.serializer.serialize(value)
+    def deserialize(value)
+      if value.is_a?(::String)
+        Armg.deserializer.deserialize(value)
+      else
+        value
+      end
+    end
+
+    def serialize(value)
+      if value.nil?
+        nil
+      else
+        Armg.serializer.serialize(value)
+      end
     end
   end
 end

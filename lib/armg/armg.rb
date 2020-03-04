@@ -1,22 +1,16 @@
+# frozen_string_literal: true
+
 module Armg
   @deserializer = Armg::WkbDeserializer.new
   @serializer = Armg::WkbSerializer.new
 
   class << self
-    def deserializer
-      @deserializer
-    end
+    attr_reader :deserializer
 
-    def deserializer=(v)
-      @deserializer = v
-    end
+    attr_writer :deserializer
 
-    def serializer
-      @serializer
-    end
+    attr_reader :serializer
 
-    def serializer=(v)
-      @serializer = v
-    end
+    attr_writer :serializer
   end
 end

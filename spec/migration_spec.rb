@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe Armg, skip_create_table: true do
   context 'create table' do
     specify do
@@ -43,7 +45,7 @@ RSpec.describe Armg, skip_create_table: true do
 
     specify do
       ActiveRecord::Migration.add_column :geoms, 'location', :geometry, null: false
-      ActiveRecord::Migration.add_index :geoms, 'location', name: "idx_location", type: :spatial
+      ActiveRecord::Migration.add_index :geoms, 'location', name: 'idx_location', type: :spatial
 
       expect(@mysql_helper.dump).to match_ruby erbh(<<~ERB)
         create_table "geoms", force: :cascade, options: #{MysqlHelper::TABLE_OPTIONS.inspect} do |t|

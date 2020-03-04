@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'bundler/setup'
 require 'active_record'
 require 'mysql2'
@@ -7,7 +9,7 @@ require 'rspec/match_ruby'
 
 require 'mysql_helper'
 
-include ERBh
+include ERBh # rubocop:disable Style/MixinUsage
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
@@ -25,9 +27,7 @@ RSpec.configure do |config|
   config.before(:each) do |example|
     @mysql_helper.reset
 
-    unless example.metadata[:skip_create_table]
-      @mysql_helper.create_table
-    end
+    @mysql_helper.create_table unless example.metadata[:skip_create_table]
 
     Armg.deserializer = Armg::WkbDeserializer.new
     Armg.serializer = Armg::WkbSerializer.new
