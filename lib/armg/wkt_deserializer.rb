@@ -12,8 +12,10 @@ module Armg
     }.freeze
 
     def initialize(factory: nil, wkb_parser_options: {}, wkt_generator_options: {})
-      @wkb_parser = RGeo::WKRep::WKBParser.new(factory,
-                                               DEFAULT_WKB_PARSER_OPTIONS.merge(wkb_parser_options))
+      @wkb_parser = RGeo::WKRep::WKBParser.new(
+        factory,
+        DEFAULT_WKB_PARSER_OPTIONS.merge(wkb_parser_options)
+      )
       @wkt_generator = RGeo::WKRep::WKTGenerator.new(
         DEFAULT_WKT_GENERATOR_OPTIONS.merge(wkt_generator_options)
       )

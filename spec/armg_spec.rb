@@ -67,9 +67,11 @@ RSpec.describe Armg do
     specify do
       Armg.deserializer = CustomDeserializer.new
 
-      { 1 => ['POINT (1.0 1.0)', 0, RGeo::Geographic::SphericalPointImpl],
+      {
+        1 => ['POINT (1.0 1.0)', 0, RGeo::Geographic::SphericalPointImpl],
         2 => ['LINESTRING (0.0 0.0, 1.0 1.0, 2.0 2.0)', 0, RGeo::Geographic::SphericalLineStringImpl],
-        3 => ['POLYGON ((0.0 0.0, 10.0 0.0, 10.0 10.0, 0.0 10.0, 0.0 0.0), (5.0 5.0, 7.0 5.0, 7.0 7.0, 5.0 7.0, 5.0 5.0))', 0, RGeo::Geographic::SphericalPolygonImpl] }.each do |record_id, (wkt, srid, klass)|
+        3 => ['POLYGON ((0.0 0.0, 10.0 0.0, 10.0 10.0, 0.0 10.0, 0.0 0.0), (5.0 5.0, 7.0 5.0, 7.0 7.0, 5.0 7.0, 5.0 5.0))', 0, RGeo::Geographic::SphericalPolygonImpl]
+      }.each do |record_id, (wkt, srid, klass)|
         geom = Geom.find(record_id)
         expect(geom.location).to be_a klass
         expect(geom.location.srid).to eq srid
