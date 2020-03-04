@@ -3,7 +3,6 @@ require 'active_record'
 require 'mysql2'
 require 'armg'
 require 'erbh'
-require 'rspec/match_fuzzy'
 require 'rspec/match_ruby'
 
 require 'mysql_helper'
