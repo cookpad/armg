@@ -15,8 +15,10 @@ module Armg
       @wkb_generator = RGeo::WKRep::WKBGenerator.new(
         DEFAULT_WKB_GENERATOR_OPTIONS.merge(wkb_generator_options)
       )
-      @wkt_parser = RGeo::WKRep::WKTParser.new(factory,
-                                               DEFAULT_WKT_PARSER_OPTIONS.merge(wkt_parser_options))
+      @wkt_parser = RGeo::WKRep::WKTParser.new(
+        factory,
+        DEFAULT_WKT_PARSER_OPTIONS.merge(wkt_parser_options)
+      )
     end
 
     def serialize(wkt)
