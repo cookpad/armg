@@ -12,6 +12,7 @@ gemfile:
   - gemfiles/ar50.gemfile
   - gemfiles/ar51.gemfile
   - gemfiles/ar52.gemfile
+  - gemfiles/ar60.gemfile
 before_script:
   - sudo service mysql stop
   - docker-compose up -d
@@ -26,3 +27,7 @@ env:
   - ARMG_TEST_MYSQL_PORT=10057 ARMG_TEST_MYSQL_ENGINE=InnoDB
 script:
   - bundle exec rake
+matrix:
+  exclude:
+    - rvm: 2.4.9
+      gemfile: gemfiles/ar60.gemfile
