@@ -20,7 +20,6 @@ before_script:
   - for i in {1..60}; do mysql_ping 10057 && break; sleep 1; done
 cache:
   - bundler
-  - apt
 env:
   - ARMG_TEST_MYSQL_PORT=10056 ARMG_TEST_MYSQL_ENGINE=MyISAM
   - ARMG_TEST_MYSQL_PORT=10057 ARMG_TEST_MYSQL_ENGINE=MyISAM
