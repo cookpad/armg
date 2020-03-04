@@ -1,18 +1,17 @@
-dist: trusty
+dist: xenial
 sudo: required
 group: edge
 services:
   - docker
 language: ruby
 rvm:
-  - 2.2.7
-  - 2.3.4
-  - 2.4.1
+  - 2.4.9
+  - 2.5.7
+  - 2.6.5
 gemfile:
   - gemfiles/ar50.gemfile
   - gemfiles/ar51.gemfile
-before_install:
-  - gem install bundler
+  - gemfiles/ar52.gemfile
 before_script:
   - sudo service mysql stop
   - docker-compose up -d

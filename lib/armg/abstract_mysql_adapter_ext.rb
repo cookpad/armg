@@ -8,7 +8,7 @@ module Armg::AbstractMysqlAdapterExt
     is = super
 
     is.each do |i|
-      if i.type == :spatial
+      if i.type == :spatial && i.respond_to?(:lengths=)
         i.lengths = nil
       end
     end
