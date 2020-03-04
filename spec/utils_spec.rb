@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe Armg::Utils do
   describe '.mysql_geometry_to_wkb' do
     specify do
