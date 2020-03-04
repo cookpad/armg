@@ -113,6 +113,42 @@ bundle exec appraisal ar51 rake
 # ARMG_TEST_MYSQL_PORT=10057 ARMG_TEST_MYSQL_ENGINE=InnoDB bundle exec appraisal ar51 rake
 ```
 
+## Using with [Ridgepole](https://github.com/winebarrel/ridgepole)
+
+You need to extend the TableDefinition class.
+
+```ruby
+# ridgepole-geo.rb
+module Ridgepole
+  class DSLParser
+    class TableDefinition
+      def geometry(*args)
+        options = args.extract_options!
+        column_names = args
+        column_names.each { |name| column(name, :geometry, options) }
+      end
+    end
+  end
+end
+```
+
+```sh
+$ ridgepole -c 'mysql2://root@127.0.0.1:10057/armg_test' -r armg -e > Schemafile
+
+$ cat Schemafile
+# Export Schema
+create_table "geoms", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  t.geometry "location", null: false
+  t.string "name"
+  t.index ["location"], name: "idx_location", length: 32, type: :spatial
+  t.index ["name"], name: "idx_name", length: 10
+end
+
+$ ridgepole -c 'mysql2://root@127.0.0.1:10057/armg_test' -r armg,ridgepole-geo -a
+Apply `Schemafile`
+No change
+```
+
 ## Related links
 
 * [rgeo/rgeo: Geospatial data library for Ruby](https://github.com/rgeo/rgeo)
