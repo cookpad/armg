@@ -10,6 +10,8 @@ RSpec.describe Armg do
       geom = Geom.find(4)
       expect(geom.location.srid).to eq 4326
       expect(geom.location.to_s).to eq 'POINT (-122.1 47.3)'
+      rs = ActiveRecord::Base.connection.execute('SELECT AsText(location) FROM geoms WHERE id = 4')
+      expect(rs.to_a).to eq([['POINT(-122.1 47.3)']])
     end
   end
 
@@ -30,6 +32,8 @@ RSpec.describe Armg do
       geom = Geom.find(3)
       expect(geom.location.srid).to eq 14_326
       expect(geom.location.to_s).to eq 'POINT (-122.1 147.3)'
+      rs = ActiveRecord::Base.connection.execute('SELECT AsText(location) FROM geoms WHERE id = 3')
+      expect(rs.to_a).to eq([['POINT(-122.1 147.3)']])
     end
   end
 
