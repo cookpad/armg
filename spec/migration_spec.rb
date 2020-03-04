@@ -11,14 +11,14 @@ RSpec.describe Armg, skip_create_table: true do
       schema = @mysql_helper.dump
       schema.sub!(', using: :btree', '') # for Active Record 5.0
 
-      expect(schema).to match_fuzzy <<-RUBY
+      expect(schema).to match_ruby erbh(<<-ERB)
         create_table "geoms", force: :cascade, options: #{MysqlHelper::TABLE_OPTIONS.inspect} do |t|
           t.geometry "location", null: false
           t.string "name"
-          t.index ["location"], name: "idx_location", type: :spatial
-          t.index ["name"], name: "idx_name", length: { name: 10 }
+          t.index ["location"], name: "idx_location", type: :spatial <%= ActiveRecord.gem_version >= Gem::Version.new('5.2') ? ', length: 32' : '' %>
+          t.index ["name"], name: "idx_name", length: <%= ActiveRecord.gem_version >= Gem::Version.new('5.2') ? '10' : '{ name: 10 }' %>
         end
-      RUBY
+      ERB
     end
   end
 
@@ -33,24 +33,24 @@ RSpec.describe Armg, skip_create_table: true do
         t.index ['location'], name: 'idx_location', type: :spatial
       end
 
-      expect(@mysql_helper.dump).to match_fuzzy <<-RUBY
+      expect(@mysql_helper.dump).to match_ruby erbh(<<~ERB)
         create_table "geoms", force: :cascade, options: #{MysqlHelper::TABLE_OPTIONS.inspect} do |t|
           t.geometry "location", null: false
-          t.index ["location"], name: "idx_location", type: :spatial
+          t.index ["location"], name: "idx_location", type: :spatial <%= ActiveRecord.gem_version >= Gem::Version.new('5.2') ? ', length: 32' : '' %>
         end
-      RUBY
+      ERB
     end
 
     specify do
       ActiveRecord::Migration.add_column :geoms, 'location', :geometry, null: false
       ActiveRecord::Migration.add_index :geoms, 'location', name: "idx_location", type: :spatial
 
-      expect(@mysql_helper.dump).to match_fuzzy <<-RUBY
+      expect(@mysql_helper.dump).to match_ruby erbh(<<~ERB)
         create_table "geoms", force: :cascade, options: #{MysqlHelper::TABLE_OPTIONS.inspect} do |t|
           t.geometry "location", null: false
-          t.index ["location"], name: "idx_location", type: :spatial
+          t.index ["location"], name: "idx_location", type: :spatial <%= ActiveRecord.gem_version >= Gem::Version.new('5.2') ? ', length: 32' : '' %>
         end
-      RUBY
+      ERB
     end
   end
 end

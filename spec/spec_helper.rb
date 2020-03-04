@@ -2,8 +2,13 @@ require 'bundler/setup'
 require 'active_record'
 require 'mysql2'
 require 'armg'
-require 'mysql_helper'
+require 'erbh'
 require 'rspec/match_fuzzy'
+require 'rspec/match_ruby'
+
+require 'mysql_helper'
+
+include ERBh
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
