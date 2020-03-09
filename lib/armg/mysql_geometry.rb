@@ -6,9 +6,16 @@ module Armg
       :geometry
     end
 
+    def binary?
+      true
+    end
+
     def deserialize(value)
-      if value.is_a?(::String)
+      case value
+      when ::String
         Armg.deserializer.deserialize(value)
+      when ActiveModel::Type::Binary::Data
+        Armg.deserializer.deserialize(value.to_s)
       else
         value
       end
@@ -18,7 +25,8 @@ module Armg
       if value.nil?
         nil
       else
-        Armg.serializer.serialize(value)
+        value = Armg.serializer.serialize(value)
+        ActiveModel::Type::Binary::Data.new(value)
       end
     end
   end
