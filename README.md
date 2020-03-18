@@ -119,17 +119,22 @@ You need to extend the TableDefinition class.
 
 ```ruby
 # ridgepole-geo.rb
-module Ridgepole
-  class DSLParser
-    class TableDefinition
-      def geometry(*args)
-        options = args.extract_options!
-        column_names = args
-        column_names.each { |name| column(name, :geometry, options) }
-      end
-    end
+module TableDefinitionExtForGeometry
+  def geometry(*args)
+    options = args.extract_options!
+    column_names = args
+    column_names.each { |name| column(name, :geometry, options) }
   end
 end
+Ridgepole::DSLParser::TableDefinition.prepend(TableDefinitionExtForGeometry)
+
+module DiffExtForGeometry
+  def normalize_index_options!(opts)
+    super
+    opts.delete(:length) if opts[:type] == :spatial
+  end
+end
+Ridgepole::Diff.prepend(DiffExtForGeometry)
 ```
 
 ```sh
