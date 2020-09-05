@@ -12,6 +12,7 @@ module Armg
 
       is.each do |i|
         i.lengths = nil if i.type == :spatial && i.respond_to?(:lengths=)
+        i.instance_variable_set(:@lengths, nil) if i.type == :spatial && i.instance_variable_defined?(:@lengths)
       end
 
       is
