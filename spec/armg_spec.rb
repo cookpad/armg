@@ -52,20 +52,22 @@ RSpec.describe Armg do
   end
 
   context 'passing custom deserializer' do
-    class CustomDeserializer
-      def initialize
-        factory = RGeo::Geographic.spherical_factory(srid: 0)
-        @wkb_parser = RGeo::WKRep::WKBParser.new(factory, support_ewkb: true)
-      end
+    let(:custom_deserializer) do
+      Class.new do
+        def initialize
+          factory = RGeo::Geographic.spherical_factory(srid: 0)
+          @wkb_parser = RGeo::WKRep::WKBParser.new(factory, support_ewkb: true)
+        end
 
-      def deserialize(wkb)
-        wkb_without_srid = wkb.b.slice(4..-1)
-        @wkb_parser.parse(wkb_without_srid)
+        def deserialize(wkb)
+          wkb_without_srid = wkb.b.slice(4..-1)
+          @wkb_parser.parse(wkb_without_srid)
+        end
       end
     end
 
     specify do
-      Armg.deserializer = CustomDeserializer.new
+      Armg.deserializer = custom_deserializer.new
 
       {
         1 => ['POINT (1.0 1.0)', 0, RGeo::Geographic::SphericalPointImpl],
@@ -81,22 +83,24 @@ RSpec.describe Armg do
   end
 
   context 'passing custom serializer' do
-    class CustomSerializer
-      def initialize
-        @wkt_parser = RGeo::WKRep::WKTParser.new(nil, support_ewkt: true)
-        @wkb_generator = RGeo::WKRep::WKBGenerator.new(type_format: :ewkb, little_endian: true)
-      end
+    let(:custom_deserializer) do
+      Class.new do
+        def initialize
+          @wkt_parser = RGeo::WKRep::WKTParser.new(nil, support_ewkt: true)
+          @wkb_generator = RGeo::WKRep::WKBGenerator.new(type_format: :ewkb, little_endian: true)
+        end
 
-      def serialize(value)
-        value = @wkt_parser.parse(value) if value.is_a?(String)
+        def serialize(value)
+          value = @wkt_parser.parse(value) if value.is_a?(String)
 
-        srid = "\x00\x00\x00\x00"
-        srid + @wkb_generator.generate(value)
+          srid = "\x00\x00\x00\x00"
+          srid + @wkb_generator.generate(value)
+        end
       end
     end
 
     specify do
-      Armg.serializer = CustomSerializer.new
+      Armg.serializer = custom_deserializer.new
       Geom.create!(id: 4, location: 'Point(-122.1 47.3)')
       geom = Geom.find(4)
       expect(geom.location.srid).to eq 0
