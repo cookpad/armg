@@ -6,7 +6,13 @@ class MysqlHelper
   MYSQL_USER    = ENV['ARMG_TEST_MYSQL_USER'] || 'root'
   MYSQL_DB      = ENV['ARMG_TEST_MYSQL_DB'] || 'armg_test'
   MYSQL_ENGINE  = ENV['ARMG_TEST_MYSQL_ENGINE'] || 'MyISAM'
-  TABLE_OPTIONS = "ENGINE=#{MYSQL_ENGINE} DEFAULT CHARSET=utf8"
+  TABLE_OPTIONS = if ActiveRecord.gem_version < Gem::Version.new('6.1.0')
+                    "ENGINE=#{MYSQL_ENGINE} DEFAULT CHARSET=utf8"
+                  elsif MYSQL_ENGINE == 'InnoDB'
+                    nil
+                  else
+                    "ENGINE=#{MYSQL_ENGINE}"
+                  end
 
   def initialize
     @mysql = Mysql2::Client.new(
@@ -23,7 +29,10 @@ class MysqlHelper
     buf = StringIO.new
     ActiveRecord::SchemaDumper.dump(ActiveRecord::Base.connection, buf)
     buf = buf.string.sub(/\A.*\bActiveRecord::Schema\.define\(version: \d+\) do/m, '').sub(/end\s*\z/, '')
-    buf.lines.map { |l| l.sub(/\A  /, '') }.join.strip
+    schema = buf.lines.map { |l| l.sub(/\A  /, '') }.join.strip
+
+    # NOTE: Fix for ActiveRecord 6.1
+    schema.gsub(', charset: "latin1"', '')
   end
 
   def create_table

@@ -14,7 +14,7 @@ RSpec.describe Armg, skip_create_table: true do
       schema.sub!(', using: :btree', '') # for Active Record 5.0
 
       expect(schema).to match_ruby erbh(<<-ERB)
-        create_table "geoms", force: :cascade, options: #{MysqlHelper::TABLE_OPTIONS.inspect} do |t|
+        create_table "geoms", force: :cascade <%= MysqlHelper::TABLE_OPTIONS ? %s!, options: "#{MysqlHelper::TABLE_OPTIONS}"! : '' %> do |t|
           t.geometry "location", null: false
           t.string "name"
           t.index ["location"], name: "idx_location", type: :spatial <%= ActiveRecord.gem_version >= Gem::Version.new('5.2') ? ', length: 32' : '' %>
@@ -36,7 +36,7 @@ RSpec.describe Armg, skip_create_table: true do
       end
 
       expect(@mysql_helper.dump).to match_ruby erbh(<<~ERB)
-        create_table "geoms", force: :cascade, options: #{MysqlHelper::TABLE_OPTIONS.inspect} do |t|
+        create_table "geoms", force: :cascade <%= MysqlHelper::TABLE_OPTIONS ? %s!, options: "#{MysqlHelper::TABLE_OPTIONS}"! : '' %> do |t|
           t.geometry "location", null: false
           t.index ["location"], name: "idx_location", type: :spatial <%= ActiveRecord.gem_version >= Gem::Version.new('5.2') ? ', length: 32' : '' %>
         end
@@ -48,7 +48,7 @@ RSpec.describe Armg, skip_create_table: true do
       ActiveRecord::Migration.add_index :geoms, 'location', name: 'idx_location', type: :spatial
 
       expect(@mysql_helper.dump).to match_ruby erbh(<<~ERB)
-        create_table "geoms", force: :cascade, options: #{MysqlHelper::TABLE_OPTIONS.inspect} do |t|
+        create_table "geoms", force: :cascade <%= MysqlHelper::TABLE_OPTIONS ? %s!, options: "#{MysqlHelper::TABLE_OPTIONS}"! : '' %>  do |t|
           t.geometry "location", null: false
           t.index ["location"], name: "idx_location", type: :spatial <%= ActiveRecord.gem_version >= Gem::Version.new('5.2') ? ', length: 32' : '' %>
         end

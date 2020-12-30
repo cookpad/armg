@@ -24,9 +24,12 @@ jobs:
           - gemfiles/ar51.gemfile
           - gemfiles/ar52.gemfile
           - gemfiles/ar60.gemfile
+          - gemfiles/ar61.gemfile
         exclude:
           - ruby: 2.4
             gemfile: gemfiles/ar60.gemfile
+          - ruby: 2.4
+            gemfile: gemfiles/ar61.gemfile
 
     steps:
       - uses: actions/checkout@v2
