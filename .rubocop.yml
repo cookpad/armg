@@ -3,6 +3,7 @@ AllCops:
     - gemfiles/**/*
     - test.rb
   TargetRubyVersion: 2.4
+  NewCops: enable
 Bundler/OrderedGems:
   Include:
     - "Appraisals"
@@ -22,3 +23,5 @@ Style/HashTransformKeys:
   Enabled: true
 Style/HashTransformValues:
   Enabled: true
+Gemspec/RequiredRubyVersion:
+  Enabled: false
