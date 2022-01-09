@@ -30,7 +30,7 @@ jobs:
       - uses: actions/cache@v2
         with:
           path: gemfiles/vendor/bundle
-          key: ${{ runner.os }}-gems-${{ matrix.ruby }}-${{ matrix.gemfile }}-${{ hashFiles('ridgepole.gemspec', '**/Gemfile', '${{ matrix.gemfile }}') }}
+          key: ${{ runner.os }}-gems-${{ matrix.ruby }}-${{ matrix.gemfile }}-${{ hashFiles('ridgepole.gemspec', '**/Gemfile', matrix.gemfile) }}
           restore-keys: |
             ${{ runner.os }}-gems-${{ matrix.ruby }}-${{ matrix.gemfile }}-
 
