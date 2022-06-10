@@ -108,10 +108,10 @@ Geom.create!(id: 4, location: 'Point(-122.1 47.3)')
 docker-compose up -d
 bundle install
 bundle exec appraisal install
-bundle exec appraisal ar51 rake
-# bundle exec appraisal ar50 rake
-# ARMG_TEST_MYSQL_PORT=10057 bundle exec appraisal ar51 rake # MySQL 5.7
-# ARMG_TEST_MYSQL_PORT=10057 ARMG_TEST_MYSQL_ENGINE=InnoDB bundle exec appraisal ar51 rake
+bundle exec appraisal ar61 rake
+# bundle exec appraisal ar60 rake
+# ARMG_TEST_MYSQL_PORT=10057 bundle exec appraisal ar61 rake # MySQL 5.7
+# ARMG_TEST_MYSQL_PORT=10057 ARMG_TEST_MYSQL_ENGINE=InnoDB bundle exec appraisal ar61 rake
 ```
 
 ## Using with [Ridgepole](https://github.com/winebarrel/ridgepole)
