@@ -11,10 +11,9 @@ jobs:
       fail-fast: false
       matrix:
         ruby:
-          - 2.4
-          - 2.5
-          - 2.6
           - 2.7
+          - 3.0
+          - 3.1
         env:
           - ARMG_TEST_MYSQL_PORT=10056 ARMG_TEST_MYSQL_ENGINE=MyISAM
           - ARMG_TEST_MYSQL_PORT=10057 ARMG_TEST_MYSQL_ENGINE=MyISAM
@@ -25,11 +24,6 @@ jobs:
           - gemfiles/ar52.gemfile
           - gemfiles/ar60.gemfile
           - gemfiles/ar61.gemfile
-        exclude:
-          - ruby: 2.4
-            gemfile: gemfiles/ar60.gemfile
-          - ruby: 2.4
-            gemfile: gemfiles/ar61.gemfile
 
     steps:
       - uses: actions/checkout@v2
