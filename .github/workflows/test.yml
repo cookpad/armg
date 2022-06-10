@@ -19,9 +19,6 @@ jobs:
           - ARMG_TEST_MYSQL_PORT=10057 ARMG_TEST_MYSQL_ENGINE=MyISAM
           - ARMG_TEST_MYSQL_PORT=10057 ARMG_TEST_MYSQL_ENGINE=InnoDB
         gemfile:
-          - gemfiles/ar50.gemfile
-          - gemfiles/ar51.gemfile
-          - gemfiles/ar52.gemfile
           - gemfiles/ar60.gemfile
           - gemfiles/ar61.gemfile
 

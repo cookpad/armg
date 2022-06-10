@@ -23,7 +23,7 @@ Gem::Specification.new do |spec|
 
   spec.metadata['rubygems_mfa_required'] = 'true'
 
-  spec.add_dependency 'activerecord', '>= 5', '< 7'
+  spec.add_dependency 'activerecord', '>= 6', '< 7'
   spec.add_dependency 'rgeo'
   spec.add_development_dependency 'appraisal', '>= 2.2.0'
   spec.add_development_dependency 'bundler'
