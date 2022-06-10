@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 class MysqlHelper
-  MYSQL_HOST    = ENV['ARMG_TEST_MYSQL_HOST'] || '127.0.0.1'
-  MYSQL_PORT    = ENV['ARMG_TEST_MYSQL_PORT'] || 10_056
-  MYSQL_USER    = ENV['ARMG_TEST_MYSQL_USER'] || 'root'
-  MYSQL_DB      = ENV['ARMG_TEST_MYSQL_DB'] || 'armg_test'
-  MYSQL_ENGINE  = ENV['ARMG_TEST_MYSQL_ENGINE'] || 'MyISAM'
+  MYSQL_HOST    = ENV.fetch('ARMG_TEST_MYSQL_HOST', '127.0.0.1')
+  MYSQL_PORT    = ENV.fetch('ARMG_TEST_MYSQL_PORT', 10_056)
+  MYSQL_USER    = ENV.fetch('ARMG_TEST_MYSQL_USER', 'root')
+  MYSQL_DB      = ENV.fetch('ARMG_TEST_MYSQL_DB', 'armg_test')
+  MYSQL_ENGINE  = ENV.fetch('ARMG_TEST_MYSQL_ENGINE', 'MyISAM')
   TABLE_OPTIONS = if ActiveRecord.gem_version < Gem::Version.new('6.1.0')
                     "ENGINE=#{MYSQL_ENGINE} DEFAULT CHARSET=utf8"
                   elsif MYSQL_ENGINE == 'InnoDB'
