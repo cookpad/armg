@@ -14,7 +14,6 @@ Gem::Specification.new do |spec|
   spec.description   = 'Add MySQL geometry type to Active Record.'
   spec.homepage      = 'https://github.com/winebarrel/armg'
   spec.license       = 'MIT'
-
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
     f.match(%r{^(test|spec|features)/})
   end
@@ -22,7 +21,9 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
-  spec.add_dependency 'activerecord', '>= 5', '< 7'
+  spec.metadata['rubygems_mfa_required'] = 'true'
+
+  spec.add_dependency 'activerecord', '>= 6', '< 7'
   spec.add_dependency 'rgeo'
   spec.add_development_dependency 'appraisal', '>= 2.2.0'
   spec.add_development_dependency 'bundler'
