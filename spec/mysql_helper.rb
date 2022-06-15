@@ -28,7 +28,7 @@ class MysqlHelper
   def dump
     buf = StringIO.new
     ActiveRecord::SchemaDumper.dump(ActiveRecord::Base.connection, buf)
-    buf = buf.string.sub(/\A.*\bActiveRecord::Schema\.define\(version: \d+\) do/m, '').sub(/end\s*\z/, '')
+    buf = buf.string.sub(/\A.*\bActiveRecord::Schema(?:\[[\d.]+?\])?\.define\(version: \d+\) do/m, '').sub(/end\s*\z/, '')
     schema = buf.lines.map { |l| l.sub(/\A  /, '') }.join.strip
 
     # NOTE: Fix for ActiveRecord 6.1

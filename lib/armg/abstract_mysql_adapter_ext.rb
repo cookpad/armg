@@ -16,5 +16,9 @@ module Armg
 
       is
     end
+
+    def type_map
+      @type_map ||= super.tap { |m| m.register_type(/^geometry/i, Armg::MysqlGeometry.new) }
+    end
   end
 end

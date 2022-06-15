@@ -21,6 +21,7 @@ jobs:
         gemfile:
           - gemfiles/ar60.gemfile
           - gemfiles/ar61.gemfile
+          - gemfiles/ar70.gemfile
 
     steps:
       - uses: actions/checkout@v2
