@@ -2,11 +2,6 @@
 
 module Armg
   module AbstractMysqlAdapterExt
-    def initialize_type_map(m = type_map)
-      super
-      m.register_type(/^geometry/i, Armg::MysqlGeometry.new)
-    end
-
     def indexes(*args, &block)
       is = super
 
@@ -15,6 +10,10 @@ module Armg
       end
 
       is
+    end
+
+    def type_map
+      @type_map ||= super.tap { |m| m.register_type(/^geometry/i, Armg::MysqlGeometry.new) }
     end
   end
 end
