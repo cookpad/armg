@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = 'Add MySQL geometry type to Active Record.'
   spec.description   = 'Add MySQL geometry type to Active Record.'
-  spec.homepage      = 'https://github.com/winebarrel/armg'
+  spec.homepage      = 'https://github.com/cookpad/armg'
   spec.license       = 'MIT'
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
     f.match(%r{^(test|spec|features)/})
