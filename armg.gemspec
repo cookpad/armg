@@ -7,8 +7,8 @@ require 'armg/version'
 Gem::Specification.new do |spec|
   spec.name          = 'armg'
   spec.version       = Armg::VERSION
-  spec.authors       = ['Genki Sugawara']
-  spec.email         = ['sugawara@cookpad.com']
+  spec.authors       = ['Genki Sugawara', 'Cookpad Inc.']
+  spec.email         = ['kaimono-dev@cookpad.com']
 
   spec.summary       = 'Add MySQL geometry type to Active Record.'
   spec.description   = 'Add MySQL geometry type to Active Record.'
