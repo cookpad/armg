@@ -25,3 +25,5 @@ Style/HashTransformValues:
   Enabled: true
 Gemspec/RequiredRubyVersion:
   Enabled: false
+Gemspec/DevelopmentDependencies:
+  EnforcedStyle: gemspec
