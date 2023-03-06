@@ -155,6 +155,14 @@ Apply `Schemafile`
 No change
 ```
 
+## Note
+
+This gem supports only SRIDs with long-lat axis order in MySQL8.0 now.
+e.g. SRID=3857 (WGS 84 / Pseudo-Mercator -- Spherical Mercator, Google Maps, OpenStreetMap, Bing, ArcGIS, ESRI)
+
+That is, does not support SRIDs with lat-long axis order.
+e.g. SRID=4326 (WGS 84 -- WGS84 - World Geodetic System 1984, used in GPS)
+
 ## Related links
 
 * [rgeo/rgeo: Geospatial data library for Ruby](https://github.com/rgeo/rgeo)
