@@ -6,13 +6,7 @@ class MysqlHelper
   MYSQL_USER    = ENV.fetch('ARMG_TEST_MYSQL_USER', 'root')
   MYSQL_DB      = ENV.fetch('ARMG_TEST_MYSQL_DB', 'armg_test')
   MYSQL_ENGINE  = ENV.fetch('ARMG_TEST_MYSQL_ENGINE', 'MyISAM')
-  TABLE_OPTIONS = if ActiveRecord.gem_version < Gem::Version.new('6.1.0')
-                    "ENGINE=#{MYSQL_ENGINE} DEFAULT CHARSET=utf8"
-                  elsif MYSQL_ENGINE == 'InnoDB'
-                    nil
-                  else
-                    "ENGINE=#{MYSQL_ENGINE}"
-                  end
+  TABLE_OPTIONS = "ENGINE=#{MYSQL_ENGINE} DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin"
 
   def initialize
     @mysql = Mysql2::Client.new(
