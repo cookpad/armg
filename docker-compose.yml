@@ -12,3 +12,9 @@ services:
     image: "mysql:5.7"
     environment:
       - MYSQL_ALLOW_EMPTY_PASSWORD=1
+  mysql80:
+    ports:
+      - "10080:3306"
+    image: "mysql:8.0"
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=1
