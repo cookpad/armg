@@ -41,9 +41,9 @@ class MysqlHelper
       t.index ['location'], name: 'idx_location', type: :spatial
     end
 
-    ActiveRecord::Base.connection.execute("INSERT INTO geoms (id, location) VALUES (1, GeomFromText('POINT(1 1)', 1245))")
-    ActiveRecord::Base.connection.execute("INSERT INTO geoms (id, location) VALUES (2, GeomFromText('LINESTRING(0 0,1 1,2 2)'))")
-    ActiveRecord::Base.connection.execute("INSERT INTO geoms (id, location) VALUES (3, GeomFromText('POLYGON((0 0,10 0,10 10,0 10,0 0),(5 5,7 5,7 7,5 7, 5 5))', 5678))")
+    ActiveRecord::Base.connection.execute("INSERT INTO geoms (id, location) VALUES (1, ST_GeomFromText('POINT(1 1)', 3857))")
+    ActiveRecord::Base.connection.execute("INSERT INTO geoms (id, location) VALUES (2, ST_GeomFromText('LINESTRING(0 0,1 1,2 2)'))")
+    ActiveRecord::Base.connection.execute("INSERT INTO geoms (id, location) VALUES (3, ST_GeomFromText('POLYGON((0 0,10 0,10 10,0 10,0 0),(5 5,7 5,7 7,5 7, 5 5))', 3857))")
   end
 
   private
