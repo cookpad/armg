@@ -5,13 +5,13 @@ RSpec.describe Armg do
 
   context 'insert' do
     specify do
-      point = wkt_parser.parse('SRID=4326;Point(-122.1 47.3)')
+      point = wkt_parser.parse('SRID=3857;Point(-122.1 47.3)')
       Geom.create!(id: 4, location: point)
       geom = Geom.find(4)
-      expect(geom.location.srid).to eq 4326
+      expect(geom.location.srid).to eq 3857
       expect(geom.location.to_s).to eq 'POINT (-122.1 47.3)'
-      rs = ActiveRecord::Base.connection.execute('SELECT LEFT(HEX(location), 8), AsText(location) FROM geoms WHERE id = 4')
-      expect(rs.to_a).to eq([['E6100000', 'POINT(-122.1 47.3)']])
+      rs = ActiveRecord::Base.connection.execute('SELECT LEFT(HEX(location), 8), ST_AsText(location) FROM geoms WHERE id = 4')
+      expect(rs.to_a).to eq([['110F0000', 'POINT(-122.1 47.3)']])
     end
   end
 
@@ -26,23 +26,23 @@ RSpec.describe Armg do
   context 'update' do
     specify do
       geom = Geom.find(3)
-      point = wkt_parser.parse('SRID=14326;Point(-122.1 147.3)')
+      point = wkt_parser.parse('SRID=3857;Point(-122.1 147.3)')
       geom.location = point
       geom.save!
       geom = Geom.find(3)
-      expect(geom.location.srid).to eq 14_326
+      expect(geom.location.srid).to eq 3857
       expect(geom.location.to_s).to eq 'POINT (-122.1 147.3)'
-      rs = ActiveRecord::Base.connection.execute('SELECT LEFT(HEX(location), 8), AsText(location) FROM geoms WHERE id = 3')
-      expect(rs.to_a).to eq([['F6370000', 'POINT(-122.1 147.3)']])
+      rs = ActiveRecord::Base.connection.execute('SELECT LEFT(HEX(location), 8), ST_AsText(location) FROM geoms WHERE id = 3')
+      expect(rs.to_a).to eq([['110F0000', 'POINT(-122.1 147.3)']])
     end
   end
 
   context 'select' do
     specify do
       {
-        1 => ['POINT (1.0 1.0)', 1245],
+        1 => ['POINT (1.0 1.0)', 3857],
         2 => ['LINESTRING (0.0 0.0, 1.0 1.0, 2.0 2.0)', 0],
-        3 => ['POLYGON ((0.0 0.0, 10.0 0.0, 10.0 10.0, 0.0 10.0, 0.0 0.0), (5.0 5.0, 7.0 5.0, 7.0 7.0, 5.0 7.0, 5.0 5.0))', 5678]
+        3 => ['POLYGON ((0.0 0.0, 10.0 0.0, 10.0 10.0, 0.0 10.0, 0.0 0.0), (5.0 5.0, 7.0 5.0, 7.0 7.0, 5.0 7.0, 5.0 5.0))', 3857]
       }.each do |record_id, (wkt, srid)|
         geom = Geom.find(record_id)
         expect(geom.location.srid).to eq srid

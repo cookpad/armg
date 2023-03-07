@@ -18,6 +18,8 @@ jobs:
           - ARMG_TEST_MYSQL_PORT=10056 ARMG_TEST_MYSQL_ENGINE=MyISAM
           - ARMG_TEST_MYSQL_PORT=10057 ARMG_TEST_MYSQL_ENGINE=MyISAM
           - ARMG_TEST_MYSQL_PORT=10057 ARMG_TEST_MYSQL_ENGINE=InnoDB
+          - ARMG_TEST_MYSQL_PORT=10080 ARMG_TEST_MYSQL_ENGINE=MyISAM
+          - ARMG_TEST_MYSQL_PORT=10080 ARMG_TEST_MYSQL_ENGINE=InnoDB
         gemfile:
           - gemfiles/ar60.gemfile
           - gemfiles/ar61.gemfile
@@ -47,6 +49,7 @@ jobs:
           function mysql_ping { mysqladmin -u root -h 127.0.0.1 -P $1 ping; }
           for i in {1..60}; do mysql_ping 10056 && break; sleep 1; done
           for i in {1..60}; do mysql_ping 10057 && break; sleep 1; done
+          for i in {1..60}; do mysql_ping 10080 && break; sleep 1; done
         env:
           BUNDLE_GEMFILE: ${{ matrix.gemfile }}
 
