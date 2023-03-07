@@ -3,11 +3,11 @@
 RSpec.describe Armg, skip_create_table: true do
   let(:table_options) do
     if ActiveRecord.gem_version < Gem::Version.new('6.1')
-      "options: \"#{MysqlHelper::TABLE_OPTIONS}\""
+      %(options: "#{MysqlHelper::TABLE_OPTIONS}")
     elsif MysqlHelper::MYSQL_ENGINE == 'InnoDB'
-      'charset: "utf8mb4", collation: "utf8mb4_bin"'
+      %(charset: "utf8mb4", collation: "utf8mb4_bin")
     else
-      "charset: \"utf8mb4\", collation: \"utf8mb4_bin\", options: \"ENGINE=#{MysqlHelper::MYSQL_ENGINE}\""
+      %(charset: "utf8mb4", collation: "utf8mb4_bin", options: "ENGINE=#{MysqlHelper::MYSQL_ENGINE}")
     end
   end
 
