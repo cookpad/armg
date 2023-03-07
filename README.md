@@ -155,12 +155,12 @@ Apply `Schemafile`
 No change
 ```
 
-## Note
+## Limitation on MySQL 8.0
 
-This gem supports only SRIDs with long-lat axis order in MySQL8.0 now.
+At the moment, armg gem supports only SRIDs with long-lat axis order in MySQL 8.0.
 e.g. SRID=3857 (WGS 84 / Pseudo-Mercator -- Spherical Mercator, Google Maps, OpenStreetMap, Bing, ArcGIS, ESRI)
 
-That is, does not support SRIDs with lat-long axis order.
+That is, armg does not support SRIDs with lat-long axis order.
 e.g. SRID=4326 (WGS 84 -- WGS84 - World Geodetic System 1984, used in GPS)
 
 ## Related links
