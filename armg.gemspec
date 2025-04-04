@@ -26,6 +26,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'activerecord', '>= 6', '< 8'
   spec.add_dependency 'rgeo'
   spec.add_development_dependency 'appraisal', '>= 2.2.0'
+  spec.add_development_dependency 'base64'
   spec.add_development_dependency 'bundler'
   spec.add_development_dependency 'erbh', '>= 0.1.2'
   spec.add_development_dependency 'mutex_m'
