@@ -22,7 +22,6 @@ jobs:
           - ARMG_TEST_MYSQL_PORT=10080 ARMG_TEST_MYSQL_ENGINE=InnoDB
         gemfile:
           - gemfiles/ar61.gemfile
-          - gemfiles/ar70.gemfile
           - gemfiles/ar71.gemfile
           - gemfiles/ar72.gemfile
 
@@ -40,7 +39,7 @@ jobs:
 
       - name: Setup dependencies
         run: |
-          for i in {1..60}; do docker-compose up -d && break; sleep 1; done
+          for i in {1..60}; do docker compose up -d && break; sleep 1; done
 
           gem install bundler
           bundle config path vendor/bundle
