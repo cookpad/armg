@@ -22,10 +22,7 @@ jobs:
           - ARMG_TEST_MYSQL_PORT=10080 ARMG_TEST_MYSQL_ENGINE=MyISAM
           - ARMG_TEST_MYSQL_PORT=10080 ARMG_TEST_MYSQL_ENGINE=InnoDB
         gemfile:
-          - gemfiles/ar61.gemfile
-          - gemfiles/ar70.gemfile
-          - gemfiles/ar71.gemfile
-          - gemfiles/ar72.gemfile
+          - gemfiles/ar80.gemfile
 
     steps:
       - uses: actions/checkout@v4
