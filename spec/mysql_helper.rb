@@ -19,24 +19,20 @@ class MysqlHelper
     reset_ar
   end
 
-  # rubocop:disable Metrics/MethodLength
   def dump
     buf = StringIO.new
-    ActiveRecord::SchemaDumper.dump(
-      if Gem::Version.new(ActiveRecord::VERSION::STRING) >= Gem::Version.new('7.2')
-        ActiveRecord::Base.connection_pool
-      else
-        ActiveRecord::Base.connection
-      end,
-      buf
-    )
+    if Gem::Version.new(ActiveRecord::VERSION::STRING) >= Gem::Version.new('7.2')
+      ActiveRecord::SchemaDumper.dump(ActiveRecord::Base.connection_pool, buf)
+    else
+      ActiveRecord::SchemaDumper.dump(ActiveRecord::Base.connection, buf)
+    end
+
     buf = buf.string.sub(/\A.*\bActiveRecord::Schema(?:\[[\d.]+\])?\.define\(version: \d+\) do/m, '').sub(/end\s*\z/, '')
     schema = buf.lines.map { |l| l.sub(/\A  /, '') }.join.strip
 
     # NOTE: Fix for ActiveRecord 6.1
     schema.gsub(', charset: "latin1"', '')
   end
-  # rubocop:enable Metrics/MethodLength
 
   def create_table
     ActiveRecord::Migration.create_table :geoms, options: TABLE_OPTIONS do |t|
