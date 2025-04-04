@@ -155,7 +155,13 @@ Apply `Schemafile`
 No change
 ```
 
-## Limitation on MySQL 8.0
+## Supported versions
+
+- Ruby 3.1 to 3.4
+- ActiveRecord 6.1 to 7.2
+- MySQL 5.6 to 8.0
+
+### Limitation on MySQL 8.0
 
 At the moment, armg gem supports only SRIDs with long-lat axis order in MySQL 8.0.
 e.g. SRID=3857 (WGS 84 / Pseudo-Mercator -- Spherical Mercator, Google Maps, OpenStreetMap, Bing, ArcGIS, ESRI)
