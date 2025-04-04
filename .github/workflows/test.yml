@@ -26,11 +26,11 @@ jobs:
           - gemfiles/ar70.gemfile
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
-      - uses: actions/cache@v2
+      - uses: actions/cache@v4
         with:
           path: gemfiles/vendor/bundle
           key: ${{ runner.os }}-gems-${{ matrix.ruby }}-${{ matrix.gemfile }}-${{ hashFiles('ridgepole.gemspec', '**/Gemfile', matrix.gemfile) }}
@@ -39,7 +39,7 @@ jobs:
 
       - name: Setup dependencies
         run: |
-          for i in {1..60}; do docker-compose up -d && break; sleep 1; done
+          for i in {1..60}; do docker compose up -d && break; sleep 1; done
 
           gem install bundler
           bundle config path vendor/bundle
