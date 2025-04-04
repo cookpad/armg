@@ -28,6 +28,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'appraisal', '>= 2.2.0'
   spec.add_development_dependency 'bundler'
   spec.add_development_dependency 'erbh', '>= 0.1.2'
+  spec.add_development_dependency 'mutex_m'
   spec.add_development_dependency 'mysql2'
   spec.add_development_dependency 'rake'
   spec.add_development_dependency 'rspec', '~> 3.0'
