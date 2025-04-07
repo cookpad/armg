@@ -25,6 +25,11 @@ jobs:
           - gemfiles/ar70.gemfile
           - gemfiles/ar71.gemfile
           - gemfiles/ar72.gemfile
+          - gemfiles/ar80.gemfile
+        exclude:
+          - # Ruby 3.1 is not supported by ActiveRecord 8.0
+            ruby: 3.1
+            gemfile: gemfiles/ar80.gemfile
 
     steps:
       - uses: actions/checkout@v4

@@ -8,7 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
-- Support ActiveRecord 7.1 and 7.2 [#21](https://github.com/cookpad/armg/pull/21)
+- Support ActiveRecord 7.1, 7.2, and 8.0 [#21](https://github.com/cookpad/armg/pull/21) [#22](https://github.com/cookpad/armg/pull/22)
 - Support Ruby 3.2, 3.3, and 3.4 [#21](https://github.com/cookpad/armg/pull/21)
 
 ### Changed

@@ -158,7 +158,7 @@ No change
 ## Supported versions
 
 - Ruby 3.1 to 3.4
-- ActiveRecord 7.0 to 7.2
+- ActiveRecord 7.0 to 8.0
 - MySQL 5.6 to 8.0
 
 ### Limitation on MySQL 8.0
